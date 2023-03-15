@@ -13,11 +13,15 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
-default = ["enable-ureq", "enable-tungstenite"]
+default = ["enable-ureq", "enable-tungstenite", "tungstenite-rustls-tls"]
 enable-hyper = [ "hyper", "hyper-tls", "serde_json", "futures-util", "tokio" ]
-enable-ureq = [ "ureq", "serde_json" ]
+enable-ureq = [ "ureq", "serde_json", "futures-util", "tokio" ]
 enable-tungstenite = ["tungstenite"]
 enable-tokio-tungstenite = ["tokio-tungstenite"]
+tungstenite-native-tls = ["tungstenite/native-tls"]
+tungstenite-rustls-tls = ["tungstenite/rustls-tls-native-roots"]
+tokio-tungstenite-native-tls = ["tokio-tungstenite/native-tls"]
+tokio-tungstenite-rustls-tls = ["tokio-tungstenite/rustls-tls-native-roots"]
 full = ["enable-hyper", "enable-tungstenite", "enable-ureq", "enable-tokio-tungstenite"]
 
 [dependencies]
@@ -45,10 +49,8 @@ futures-util = {version = "0.3.21", optional = true }
 tokio = { version = "1", features = ["time"], optional = true }
 
 # enable-tungstenite
-tungstenite = {version = "0.16.0", features = ["native-tls"], optional = true}
-
-# enable-tokio-tungstenite
-tokio-tungstenite = {version = "0.17.1", features = ["native-tls"], optional = true}
+#tungstenite = {version = "0.16.0", features = ["native-tls"], optional = true}
+#tokio-tungstenite = {version = "0.17.1", features = ["native-tls"], optional = true}
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
@@ -56,3 +58,13 @@ env_logger = "0.10.0"
 tower = "0.4.12"
 rust_decimal_macros = "1.24.0"
 cargo-audit = "0.17.4"
+
+# enable-tokio-tungstenite
+[dependencies.tungstenite]
+optional = true
+version = "0.16.0"
+
+# enable-tokio-tungstenite
+[dependencies.tokio-tungstenite]
+optional = true
+version = "0.17.1"
